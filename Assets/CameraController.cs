@@ -4,28 +4,18 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    [SerializeField] private Transform playerBody;
+    private float mouseSensitivity = 100f;
+    private float xRotation = 0f;
+    void Start() {
+        Cursor.lockState = CursorLockMode.Locked;
     }
-
-    // Update is called once per frame
     void Update()
     {
-        //// Smoothly tilts a transform towards a target rotation.
-        //float tiltAroundZ = Input.GetAxis("Horizontal") * 180;
-        //float tiltAroundX = Input.GetAxis("Vertical") * -180;
+        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        playerBody.Rotate(Vector3.up, mouseX);
 
-        //// Rotate the cube by converting the angles into a quaternion.
-        //Quaternion target = Quaternion.Euler(tiltAroundX, 0, tiltAroundZ);
-
-        //// Dampen towards the target rotation
-        //transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * 5.0f);
-        float tiltAroundZ = Input.GetAxis("Horizontal") / 2f;
-        transform.Rotate(0, 0, tiltAroundZ, Space.Self);
-
-        transform.gameObject.transform.position += new Vector3(-1 * Time.deltaTime, 0, 0);
     }
 }
-
