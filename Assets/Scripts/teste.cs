@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class teste : MonoBehaviour
 {
-    GameObject cubeModifier;
+    public Player player;
 
     void Start() // Start is called before the first frame update
     {
-        cubeModifier = GameObject.Find("Cube");
+
     }
     void Update() // Update is called once per frame
     {
@@ -17,7 +17,7 @@ public class teste : MonoBehaviour
     {
         Debug.Log("moving at speed: " + msg);
         float speed = float.Parse(msg) * 100;
-        cubeModifier.gameObject.transform.Translate(Vector3.up * Time.deltaTime * speed);
+        player.jump = true;
     }
     // Invoked when a connect/disconnect event occurs. The parameter 'success'
     // will be 'true' upon connection, and 'false' upon disconnection or
