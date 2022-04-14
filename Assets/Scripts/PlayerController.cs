@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     public int rings { get; set; }
     [SerializeField] private CharacterController controller;
@@ -83,5 +83,26 @@ public class Player : MonoBehaviour
     void OnConnectionEvent(bool success)
     {
         Debug.Log(success ? "Device connected" : "Device disconnected");
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Enemy")
+        {
+            Destroy(collision.gameObject);
+            Damage();
+        }
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == "Enemy")
+        {
+            Destroy(other.gameObject);
+            Damage();
+        }
+    }
+    private void Damage()
+    {
+
     }
 }

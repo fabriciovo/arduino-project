@@ -8,7 +8,7 @@ public class UiController : MonoBehaviour
     [SerializeField] private TMP_Text ringsText;
     [SerializeField] private TMP_Text timerText;
 
-    [SerializeField] private Player player;
+    [SerializeField] private PlayerController player;
     [SerializeField] float timer = 60f;
     // Update is called once per frame
     void Update()
