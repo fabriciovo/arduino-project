@@ -1,28 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
+using TMPro;
 
-public class UiController : MonoBehaviour
+public class UIController : MonoBehaviour
 {
-    [SerializeField] private TMP_Text ringsText;
-    [SerializeField] private TMP_Text timerText;
 
-    [SerializeField] private PlayerController player;
-    [SerializeField] float timer = 60f;
-    // Update is called once per frame
-    void Update()
+    [SerializeField]private TMP_Text textMesh;
+    // Start is called before the first frame update
+    public void changeText(string value)
     {
-        if (timer > 0)
-        {
-            timer -= Time.deltaTime;
-        }
-        if (timer <= 0)
-        {
-            timer = 0;
-            //player.GameOver();
-        }
-        ringsText.text = "Rings: " + player.rings.ToString();
-        timerText.text = "Timer: " + Mathf.FloorToInt(timer % 60); ;
+        textMesh.text = value;
     }
 }

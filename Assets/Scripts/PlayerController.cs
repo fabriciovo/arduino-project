@@ -4,80 +4,44 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public int rings { get; set; }
-    [SerializeField] private CharacterController controller;
-
-    [SerializeField] private Transform groundCheck;
-    private float groundDistance = 0.4f;
-    [SerializeField] private LayerMask groundMask;
-    private bool isGrounded = false;
-    private Vector3 velocity;
-    public bool jump = false;
-
-    private Animator animator;
-    private void Start()
+    // Start is called before the first frame update
+    public bool canPlay = false;
+    private bool detected = false;
+    void Start()
     {
-        animator = GetComponent<Animator>();
-        rings = 10;
+        
     }
 
-    private float gravity = -17.81f;
+    // Update is called once per frame
     void Update()
     {
-        controller.Move(transform.forward * 20f * Time.deltaTime);
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-
-        if (isGrounded && velocity.y < 0){
-            velocity.y = -2f; 
-        }
-        
-        if (rings <= 0)
+        if (canPlay)
         {
-            GameOver();
-        }
-        if (isGrounded && jump)
-        {
-            velocity.y = Mathf.Sqrt(6f * -2f * gravity);
-            jump = false;
-            
-        }
-        if(!isGrounded)
-        {
-            animator.SetBool("jump", true);
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Attack();
+                canPlay = false;
+            }
         }
         else
         {
-            animator.SetBool("jump", false);
+            if (Input.GetKeyDown(KeyCode.Space) && !detected)
+            {
+                //Attack();
 
+            }
         }
-        velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
     }
-    private void GameOver()
+
+    private void Attack()
     {
-        
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Ring")
-        {
-            rings++;
-            Destroy(other.gameObject);
-        }
-        if (other.tag == "Enemy")
-        {
-            rings--;
-            Destroy(other.gameObject);
-        }
+        Debug.Log("`Player Attack");
     }
 
     void OnMessageArrived(string msg)
     {
-        Debug.Log("moving at speed: " + msg);
-        jump = true;
-        animator.SetBool("jump", true);
-
-
+        Debug.Log("Detected " + msg);
+   
     }
 
     void OnConnectionEvent(bool success)
@@ -85,24 +49,4 @@ public class PlayerController : MonoBehaviour
         Debug.Log(success ? "Device connected" : "Device disconnected");
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.tag == "Enemy")
-        {
-            Destroy(collision.gameObject);
-            Damage();
-        }
-    }
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject.tag == "Enemy")
-        {
-            Destroy(other.gameObject);
-            Damage();
-        }
-    }
-    private void Damage()
-    {
-
-    }
 }
