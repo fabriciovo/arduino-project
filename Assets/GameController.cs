@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     // Start is called before the first frame update
-    private bool playerTurn = true;
+    public bool playerTurn = true;
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject enemy;
     [SerializeField] private GameObject ui;
@@ -29,26 +29,30 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (enemyController.canPlay) {
-            playerTurn = false;
-            UIController.changeText("Enemy Turn");
-        }
-        if (playerController.canPlay)
-        {
-            playerTurn = true;
-            UIController.changeText("Player Turn");
-        }
-
-        if (!playerController.canPlay && enemyController.canPlay)
-        {
-            enemyController.canPlay = true;
-
-        }
-        if (!enemyController.canPlay && playerController.canPlay)
+        if (playerTurn)
         {
             playerController.canPlay = true;
+            UIController.changeText("Player Turn");
+        }
+        else
+        {
+            enemyController.canPlay = true;
+            UIController.changeText("Enemy Turn");
 
         }
+    }
+    public void ResetEnemy()
+    {
+        enemyController.ResetEnemy();
+    }
+
+    void PlayerDamage(int value)
+    {
+        playerController.Damage(value);
+    }
+
+    void EnemyDamage(int value)
+    {
+        enemyController.Damage(value);
     }
 }
