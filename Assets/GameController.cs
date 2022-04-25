@@ -13,7 +13,7 @@ public class GameController : MonoBehaviour
 
     [SerializeField] private PlayerController playerController;
     [SerializeField] private EnemyController enemyController;
-    [SerializeField] private UIController UIController;
+    [SerializeField] public UIController UIController;
     void Awake()
     {  
         //player = PlayerManager.instance.Player;
@@ -29,16 +29,21 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerTurn)
+        if (playerTurn && !enemyController.dead)
         {
             playerController.canPlay = true;
-            UIController.changeText("Player Turn");
+            UIController.changeTurn("Player Turn");
+        }
+        else if(!playerTurn && !enemyController.dead)
+        {
+            enemyController.canPlay = true;
+            UIController.changeTurn("Enemy Turn");
+
         }
         else
         {
-            enemyController.canPlay = true;
-            UIController.changeText("Enemy Turn");
-
+            playerController.canPlay = false;
+            UIController.changeTurn("Shop Turn");
         }
     }
     public void ResetEnemy()
@@ -46,13 +51,20 @@ public class GameController : MonoBehaviour
         enemyController.ResetEnemy();
     }
 
-    void PlayerDamage(int value)
+    public void PlayerDamage(int value)
     {
         playerController.Damage(value);
     }
 
-    void EnemyDamage(int value)
+    public void EnemyDamage(int value)
     {
+        
         enemyController.Damage(value);
+        if (enemyController.hp <= 0)
+        {
+           
+            UIController.openShop();
+
+        }
     }
 }
