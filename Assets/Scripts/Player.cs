@@ -12,7 +12,10 @@ public class Player : MonoBehaviour
     private float turnSmoothTime = 0.1f;
     private float turnSmoothVelocity;
     private bool jump = false;
+
+    private float smoothSpeed;
     Vector3 direction;
+    float dir = 0;
     void Start()
     {
 
@@ -20,7 +23,8 @@ public class Player : MonoBehaviour
         m_Rigidbody = GetComponent<Rigidbody>();
 
     }
-
+    Vector3 currentEulerAngles;
+    Quaternion currentRotation;
     // Update is called once per frame
     void Update()
     {
@@ -30,21 +34,24 @@ public class Player : MonoBehaviour
         {
             
             direction = new Vector3(0f, 0f, 1f).normalized;
+            //transform.rotation = Quaternion.Euler(0f, 90, 0f);
 
         }
         if (Input.GetKey(KeyCode.D))
         {
             direction = new Vector3(0f, 0f, -1f).normalized;
-            
+            //transform.rotation = Quaternion.Euler(0f, -90, 0f);
+
         }
         if (Input.GetKey(KeyCode.S))
         {
             direction = new Vector3(-1f, 0f, 0f).normalized;
+            //transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         }
         if (Input.GetKey(KeyCode.W))
         {
             direction = new Vector3(1f, 0f, 0f).normalized;
-
+            //transform.rotation = Quaternion.Euler(0f, 180f, 0f);
         }
         if (Input.GetKey(KeyCode.Space) && !jump)
         {
@@ -52,31 +59,52 @@ public class Player : MonoBehaviour
             jump = true;
         }
 
-        if (direction.magnitude >= 0.1f)
-        {
-            float targetAngle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg + cam.eulerAngles.y;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
-            cam.rotation = Quaternion.Euler(0f, angle, 0f);
+        //if (direction.magnitude >= 0.1f)
+        //{
+        //    float targetAngle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg + cam.eulerAngles.y;
+        //    float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+        //    transform.rotation = Quaternion.Euler(0f, angle, 0f);
+        //}
+
+        if (direction.magnitude > 0) { 
+            smoothSpeed = Mathf.Lerp(smoothSpeed, 0.1f, Time.deltaTime);
+            //t_mesh.rotation Quaternion.LookRotation(velocity);
+            cam.rotation = Quaternion.Lerp(cam.rotation, Quaternion.LookRotation(direction), Time.deltaTime * 10f);
+
         }
-         m_Rigidbody.AddForce(direction.normalized * speed * Time.deltaTime, ForceMode.Impulse);
+
         // direction = Vector3.zero;
     }
+    private void FixedUpdate()
+    {
+        m_Rigidbody.AddForce(direction.normalized * speed * Time.deltaTime, ForceMode.Impulse);
+    }
+
+    private void LateUpdate()
+    {
+        transform.Rotate(0f, dir, 0f);
+        dir = 0;
+    }
+
 
     void OnMessageArrived(string msg)
     {
         Debug.Log("Message: " + msg);
         if (msg == "L") {
             direction = new Vector3(0f, 0f, 1f).normalized;
+            //transform.rotation = Quaternion.Euler(0f, 90, 0f);
         }
         if (msg == "R") {
             direction = new Vector3(0f, 0f, -1f).normalized;
+            //transform.rotation = Quaternion.Euler(0f, -90, 0f);
         }
         if (msg == "D") {
             direction = new Vector3(-1f, 0f, 0f).normalized;
+            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         }
         if(msg == "U") {
             direction = new Vector3(1f, 0f, 0f).normalized;
+           // transform.rotation = Quaternion.Euler(0f, 180f, 0f);
         }
  
     }
