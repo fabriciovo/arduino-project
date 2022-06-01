@@ -11,102 +11,113 @@ public class Player : MonoBehaviour
     [SerializeField] Transform cam;
     private float turnSmoothTime = 0.1f;
     private float turnSmoothVelocity;
-    private bool jump = false;
 
     private float smoothSpeed;
     Vector3 direction;
-    float dir = 0;
+
+    float gravityForce = 10f;
+    private bool grounded = true;
+    public LayerMask whatIsGround;
+    public float groundRayLenght;
+    public Transform groundRayPoint;
+    private float vSpeed;
+    private float hSpeed;
+    private float jump;
     void Start()
     {
 
-        //controller = GetComponent<CharacterController>();
         m_Rigidbody = GetComponent<Rigidbody>();
 
     }
-    Vector3 currentEulerAngles;
-    Quaternion currentRotation;
-    // Update is called once per frame
+
     void Update()
     {
 
-       
-        if (Input.GetKey(KeyCode.A))
+        jump = 0;
+        hSpeed = 0;
+        vSpeed = 0;
+        if (Input.GetAxis("Vertical") > 0)
         {
-            
-            direction = new Vector3(0f, 0f, 1f).normalized;
-            //transform.rotation = Quaternion.Euler(0f, 90, 0f);
-
+            vSpeed = Input.GetAxis("Vertical") * speed * 1000f;
         }
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetAxis("Vertical") < 0)
         {
-            direction = new Vector3(0f, 0f, -1f).normalized;
-            //transform.rotation = Quaternion.Euler(0f, -90, 0f);
-
+            vSpeed = Input.GetAxis("Vertical") * speed * 1000f;
         }
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetAxis("Horizontal") > 0)
         {
-            direction = new Vector3(-1f, 0f, 0f).normalized;
-            //transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            hSpeed = Input.GetAxis("Horizontal") * speed * 1000f;
         }
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetAxis("Horizontal") < 0)
         {
-            direction = new Vector3(1f, 0f, 0f).normalized;
-            //transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+            hSpeed = Input.GetAxis("Horizontal") * speed * 1000f;
         }
-        if (Input.GetKey(KeyCode.Space) && !jump)
+        if (Input.GetKey(KeyCode.Space))
         {
-            direction = new Vector3(0f, 3100f, 0f).normalized;
-            jump = true;
+            Debug.Log("FDOPOPASFKFOPKASOPFASKK");
+            jump = 10000f;
+        }
+        Debug.Log(grounded);
+        if (grounded)
+        {
+            //rotacao
         }
 
-        //if (direction.magnitude >= 0.1f)
-        //{
-        //    float targetAngle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg + cam.eulerAngles.y;
-        //    float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-        //    transform.rotation = Quaternion.Euler(0f, angle, 0f);
-        //}
-
-        if (direction.magnitude > 0) { 
-            smoothSpeed = Mathf.Lerp(smoothSpeed, 0.1f, Time.deltaTime);
-            //t_mesh.rotation Quaternion.LookRotation(velocity);
-            cam.rotation = Quaternion.Lerp(cam.rotation, Quaternion.LookRotation(direction), Time.deltaTime * 10f);
-
-        }
-
-        // direction = Vector3.zero;
     }
     private void FixedUpdate()
     {
-        m_Rigidbody.AddForce(direction.normalized * speed * Time.deltaTime, ForceMode.Impulse);
-    }
+        grounded = false;
+        RaycastHit hit;
 
-    private void LateUpdate()
-    {
-        transform.Rotate(0f, dir, 0f);
-        dir = 0;
-    }
 
+        if (Physics.Raycast(groundRayPoint.position, -transform.up, out hit, groundRayLenght, whatIsGround))
+        {
+            grounded = true;
+        }
+
+        if (grounded)
+        {
+            m_Rigidbody.drag = 4f;
+            if (Mathf.Abs(vSpeed) > 0 || Mathf.Abs(hSpeed) > 0 || jump > 0)
+            {
+                m_Rigidbody.AddForce(new Vector3(vSpeed, jump, hSpeed * -1) * 0.5f);
+            }
+        }
+        else
+        {
+            m_Rigidbody.drag = 0.1f;
+            if (Mathf.Abs(vSpeed) > 0 || Mathf.Abs(hSpeed) > 0 || jump > 0)
+            {
+                m_Rigidbody.AddForce(new Vector3(vSpeed, -gravityForce, hSpeed * -1) * 0.5f);
+            }
+
+        }
+    }
 
     void OnMessageArrived(string msg)
     {
         Debug.Log("Message: " + msg);
-        if (msg == "L") {
+        if (msg == "L")
+        {
             direction = new Vector3(0f, 0f, 1f).normalized;
             //transform.rotation = Quaternion.Euler(0f, 90, 0f);
         }
-        if (msg == "R") {
+        if (msg == "R")
+        {
             direction = new Vector3(0f, 0f, -1f).normalized;
             //transform.rotation = Quaternion.Euler(0f, -90, 0f);
         }
-        if (msg == "D") {
+        if (msg == "D")
+        {
             direction = new Vector3(-1f, 0f, 0f).normalized;
             transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         }
-        if(msg == "U") {
+        if (msg == "U")
+        {
             direction = new Vector3(1f, 0f, 0f).normalized;
-           // transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+            // transform.rotation = Quaternion.Euler(0f, 180f, 0f);
         }
- 
+
     }
 
     void OnConnectionEvent(bool success)
