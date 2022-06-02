@@ -14,7 +14,6 @@ public class Player : MonoBehaviour
 
     private float smoothSpeed;
     Vector3 direction;
-
     float gravityForce = 10f;
     private bool grounded = true;
     public LayerMask whatIsGround;
@@ -23,6 +22,7 @@ public class Player : MonoBehaviour
     private float vSpeed;
     private float hSpeed;
     private float jump;
+    float dir = 0;
     void Start()
     {
 
@@ -32,35 +32,40 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-
         jump = 0;
         hSpeed = 0;
         vSpeed = 0;
         if (Input.GetAxis("Vertical") > 0)
         {
             vSpeed = Input.GetAxis("Vertical") * speed * 1000f;
+            dir = 180;
         }
         if (Input.GetAxis("Vertical") < 0)
         {
             vSpeed = Input.GetAxis("Vertical") * speed * 1000f;
+            dir = 0;
+
         }
         if (Input.GetAxis("Horizontal") > 0)
         {
             hSpeed = Input.GetAxis("Horizontal") * speed * 1000f;
+            dir = -90;
+
         }
         if (Input.GetAxis("Horizontal") < 0)
         {
             hSpeed = Input.GetAxis("Horizontal") * speed * 1000f;
+            dir = 90;
         }
         if (Input.GetKey(KeyCode.Space))
         {
-            Debug.Log("FDOPOPASFKFOPKASOPFASKK");
             jump = 10000f;
         }
         Debug.Log(grounded);
+
         if (grounded)
         {
-            //rotacao
+            m_Rigidbody.MoveRotation(Quaternion.Euler(0, dir, 0));
         }
 
     }
@@ -68,7 +73,6 @@ public class Player : MonoBehaviour
     {
         grounded = false;
         RaycastHit hit;
-
 
         if (Physics.Raycast(groundRayPoint.position, -transform.up, out hit, groundRayLenght, whatIsGround))
         {
@@ -85,12 +89,11 @@ public class Player : MonoBehaviour
         }
         else
         {
-            m_Rigidbody.drag = 0.1f;
+            m_Rigidbody.drag = 2f;
             if (Mathf.Abs(vSpeed) > 0 || Mathf.Abs(hSpeed) > 0 || jump > 0)
             {
                 m_Rigidbody.AddForce(new Vector3(vSpeed, -gravityForce, hSpeed * -1) * 0.5f);
             }
-
         }
     }
 
