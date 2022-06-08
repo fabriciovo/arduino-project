@@ -23,6 +23,14 @@ public class Player : MonoBehaviour
     private float hSpeed;
     private float jump;
     float dir = 0;
+
+    [SerializeField] GameObject sonic;
+    [SerializeField] GameObject sonicSpin;
+
+    void Awake() {
+        sonicSpin.SetActive(false);
+    }
+
     void Start()
     {
 
@@ -66,6 +74,8 @@ public class Player : MonoBehaviour
         if (grounded)
         {
             m_Rigidbody.MoveRotation(Quaternion.Euler(0, dir, 0));
+            sonicSpin.SetActive(false);
+            sonic.SetActive(true);
         }
 
     }
@@ -89,6 +99,8 @@ public class Player : MonoBehaviour
         }
         else
         {
+            sonicSpin.SetActive(true);
+            sonic.SetActive(false);
             m_Rigidbody.drag = 2f;
             if (Mathf.Abs(vSpeed) > 0 || Mathf.Abs(hSpeed) > 0 || jump > 0)
             {

@@ -1,4 +1,4 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,7 +13,6 @@ public class EnemyController : MonoBehaviour
     private Animator animator;
 
     private GameController gameController;
-
 
     private SpriteRenderer spriteRenderer;
     public Sprite deadSprite;

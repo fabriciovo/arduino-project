@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
 
-   private GameObject player;
+    private GameObject player;
     private bool grounded = false;
     private void Awake()
     {
@@ -20,9 +20,17 @@ public class Enemy : MonoBehaviour
         // Rotate the camera every frame so it keeps looking at the target
         transform.LookAt(player.transform);
 
-        if (GetComponent<NavMeshAgent>().isOnNavMesh) { 
+        if (GetComponent<NavMeshAgent>().isOnNavMesh)
+        {
             GetComponent<NavMeshAgent>().SetDestination(player.transform.position);
         }
 
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "spin"){
+            Destroy(gameObject);
+        }
     }
 }
