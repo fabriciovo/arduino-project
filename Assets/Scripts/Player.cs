@@ -24,6 +24,8 @@ public class Player : MonoBehaviour
     private float jump;
     float dir = 0;
 
+    Animator animator;
+
     [SerializeField] GameObject sonic;
     [SerializeField] GameObject sonicSpin;
 
@@ -35,7 +37,7 @@ public class Player : MonoBehaviour
     {
 
         m_Rigidbody = GetComponent<Rigidbody>();
-
+        animator = sonic.GetComponent<Animator>();
     }
 
     void Update()
@@ -69,7 +71,12 @@ public class Player : MonoBehaviour
         {
             jump = 10000f;
         }
-        Debug.Log(grounded);
+   
+    if( hSpeed ==0 && vSpeed == 0){
+        animator.SetBool("movement", false);
+    }else{
+        animator.SetBool("movement", true);
+    }
 
         if (grounded)
         {
