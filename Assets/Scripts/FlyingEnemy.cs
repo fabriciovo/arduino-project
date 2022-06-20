@@ -23,10 +23,13 @@ public class FlyingEnemy : MonoBehaviour
     {
         Vector3 direction = player.transform.position - transform.position;
         direction.Normalize();
-        Quaternion fastlook = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Slerp(transform.rotation, fastlook, Time.deltaTime*3);
+        Vector3 lookVector = player.transform.position - transform.position;
+        lookVector.y = transform.position.y;
+        Quaternion rot = Quaternion.LookRotation(lookVector);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rot, 1);
         velocity = direction * 3;
 
         controller.Move(velocity * Time.deltaTime);
     }
+
 }

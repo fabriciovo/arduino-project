@@ -7,12 +7,6 @@ public class Player : MonoBehaviour
     public float speed = 20f;
     // Start is called before the first frame update
     private Rigidbody m_Rigidbody;
-    private CharacterController controller;
-    [SerializeField] Transform cam;
-    private float turnSmoothTime = 0.1f;
-    private float turnSmoothVelocity;
-
-    private float smoothSpeed;
     Vector3 direction;
     float gravityForce = 10f;
     private bool grounded = true;

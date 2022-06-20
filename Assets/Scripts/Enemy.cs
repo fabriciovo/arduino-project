@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private GameObject effect;
     private GameObject player;
     private bool grounded = false;
     private void Awake()
@@ -27,11 +26,5 @@ public class Enemy : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.tag == "spin"){
-            Instantiate(effect, transform.position, transform.rotation);
-            Destroy(gameObject);
-        }
-    }
+
 }
