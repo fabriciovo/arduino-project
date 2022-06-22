@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     private float vSpeed;
     private float hSpeed;
     private float jump;
+    private bool canJump;
     float dir = 0;
 
     Animator animator;
@@ -36,9 +37,6 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        jump = 0;
-        hSpeed = 0;
-        vSpeed = 0;
         if (Input.GetAxis("Vertical") > 0)
         {
             vSpeed = Input.GetAxis("Vertical") * speed * 1000f;
@@ -66,6 +64,11 @@ public class Player : MonoBehaviour
             jump = 10000f;
         }
    
+        if(canJump){
+            
+             canJump = false;
+             
+        }
     if( hSpeed ==0 && vSpeed == 0){
         animator.SetBool("movement", false);
     }else{
@@ -92,11 +95,13 @@ public class Player : MonoBehaviour
 
         if (grounded)
         {
+            
             m_Rigidbody.drag = 4f;
             if (Mathf.Abs(vSpeed) > 0 || Mathf.Abs(hSpeed) > 0 || jump > 0)
             {
                 m_Rigidbody.AddForce(new Vector3(vSpeed, jump, hSpeed * -1) * 0.5f);
             }
+            
         }
         else
         {
@@ -108,6 +113,10 @@ public class Player : MonoBehaviour
                 m_Rigidbody.AddForce(new Vector3(vSpeed, -gravityForce, hSpeed * -1) * 0.5f);
             }
         }
+
+        if(!canJump){
+             jump = 0;
+        }
     }
 
     void OnMessageArrived(string msg)
@@ -115,25 +124,33 @@ public class Player : MonoBehaviour
         Debug.Log("Message: " + msg);
         if (msg == "L")
         {
-            direction = new Vector3(0f, 0f, 1f).normalized;
-            //transform.rotation = Quaternion.Euler(0f, 90, 0f);
+            vSpeed = 1 * speed * 1000f;
+            dir = 0;
         }
         if (msg == "R")
         {
-            direction = new Vector3(0f, 0f, -1f).normalized;
-            //transform.rotation = Quaternion.Euler(0f, -90, 0f);
+            vSpeed = -1 * speed * 1000f;
+            dir = 180;
+
         }
         if (msg == "D")
         {
-            direction = new Vector3(-1f, 0f, 0f).normalized;
-            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            hSpeed = -1 * speed * 1000f;
+            dir = -90;
+
         }
         if (msg == "U")
         {
-            direction = new Vector3(1f, 0f, 0f).normalized;
-            // transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+            hSpeed = 1 * speed * 1000f;
+            dir = 90;
         }
-
+        if (msg == "Button")
+        {   
+            canJump =true;
+            jump = 10000f;            
+            
+        }
+       
     }
 
     void OnConnectionEvent(bool success)
