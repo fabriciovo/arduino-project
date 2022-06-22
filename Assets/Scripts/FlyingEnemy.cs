@@ -8,16 +8,15 @@ public class FlyingEnemy : MonoBehaviour
     private GameObject player;
     private CharacterController controller;
     private Vector3 velocity;
+    [SerializeField] private GameObject laserEnemy;
+    private float cd = 0;
+    private float fireDelay = 5f;
+
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         controller = GetComponent<CharacterController>();
     }
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -29,7 +28,19 @@ public class FlyingEnemy : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, rot, 1);
         velocity = direction * 3;
 
+
+
+        cd -= Time.deltaTime;
+        if (cd <= 0 && player != null && Vector3.Distance(transform.position, player.transform.position) <90)
+        {
+            cd = fireDelay;
+
+           GameObject newBullet = Instantiate(laserEnemy, transform.position, transform.rotation);
+        }
+
+
         controller.Move(velocity * Time.deltaTime);
+
     }
 
 }

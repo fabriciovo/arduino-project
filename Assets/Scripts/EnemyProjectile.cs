@@ -5,28 +5,16 @@ using UnityEngine;
 public class EnemyProjectile : MonoBehaviour
 {
     private GameObject player;
-    private CharacterController controller;
-    private Vector3 playerPos;
-    private Vector3 velocity;
+    private Rigidbody rb;
     void Awake(){
         player = GameObject.FindGameObjectWithTag("Player");
-        controller = GetComponent<CharacterController>();
+        rb = GetComponent<Rigidbody>();
     }
     void Start()
     {
         // Add + 1 to player's last known position so bullet appears to float above ground.
-        playerPos = player.transform.position;
+         rb.AddForce(transform.forward * 400f);
     }
 
-    void Update(){
-
-        Vector3 direction = playerPos - transform.position;
-        direction.Normalize();
-        velocity = direction * 3;
-
-        controller.Move(velocity * Time.deltaTime);
-
-
-    }
 
 }

@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f32395af05c89c49a2e081cbb305c6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  laserEnemy: {fileID: 9029400919289237454, guid: 7c6bbddd874edfc41969367478686597, type: 3}
 --- !u!143 &7211998771232864979
 CharacterController:
   m_ObjectHideFlags: 0
