@@ -207,9 +207,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 926239906}
-        m_TargetAssemblyTypeName: TitleScreenController, Assembly-CSharp
-        m_MethodName: StartGame
+      - m_Target: {fileID: 926239908}
+        m_TargetAssemblyTypeName: TitleScreen, Assembly-CSharp
+        m_MethodName: OnStart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -687,7 +687,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 926239907}
-  - component: {fileID: 926239906}
+  - component: {fileID: 926239908}
   m_Layer: 0
   m_Name: TitleSceneController
   m_TagString: Untagged
@@ -695,18 +695,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &926239906
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 926239905}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56433b11d54c8f445b602dfb4f5c7ba5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &926239907
 Transform:
   m_ObjectHideFlags: 0
@@ -722,6 +710,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &926239908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 926239905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8376d18cd4a1a41459d3557cd745941c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1382404036
 GameObject:
   m_ObjectHideFlags: 0
