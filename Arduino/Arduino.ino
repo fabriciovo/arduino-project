@@ -33,8 +33,6 @@ void loop()
 
   if (valorSensor7 > 0)
   {
-    // sprintf(buffer,"L=%d", valorSensor7);
-    // Serial.println(buffer);
     Serial.println("L");
   }
   if (valorSensor6 > 0)
