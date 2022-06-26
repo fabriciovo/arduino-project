@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float speed = 20f;
     // Start is called before the first frame update
     private Rigidbody m_Rigidbody;
     Vector3 direction;
@@ -13,26 +12,37 @@ public class Player : MonoBehaviour
     public LayerMask whatIsGround;
     public float groundRayLenght;
     public Transform groundRayPoint;
-    private float vSpeed;
-    private float hSpeed;
-    private float jump;
+
     private bool canJump;
     float dir = 0;
 
     Animator animator;
 
-    [SerializeField] GameObject sonic;
-    [SerializeField] GameObject sonicSpin;
+    private float vSpeed;
+    private float hSpeed;
+    private float jump;
 
+    //Power Ups
+    [SerializeField] private GameObject shoot;
+    [SerializeField] private GameObject shield;
+    [SerializeField] private GameObject bomb; 
+   
+
+     //Stats
+    private float speed = 20f;
+    private float life = 3;
+    private float attackSpeed = 5;
+    private float attackPower = 0.5f;
+    private float cd = 0;
     void Awake() {
-        sonicSpin.SetActive(false);
+        
     }
 
     void Start()
     {
 
         m_Rigidbody = GetComponent<Rigidbody>();
-        animator = sonic.GetComponent<Animator>();
+    
     }
 
     void Update()
@@ -78,8 +88,15 @@ public class Player : MonoBehaviour
         if (grounded)
         {
             m_Rigidbody.MoveRotation(Quaternion.Euler(0, dir, 0));
-            sonicSpin.SetActive(false);
-            sonic.SetActive(true);
+        }
+
+
+        cd -= Time.deltaTime;
+        if (cd <= 0)
+        {
+            cd = attackSpeed;
+
+           GameObject newBullet = Instantiate(shoot, transform.position, transform.rotation);
         }
 
     }
@@ -105,8 +122,6 @@ public class Player : MonoBehaviour
         }
         else
         {
-            sonicSpin.SetActive(true);
-            sonic.SetActive(false);
             m_Rigidbody.drag = 2f;
             if (Mathf.Abs(vSpeed) > 0 || Mathf.Abs(hSpeed) > 0 || jump > 0)
             {
