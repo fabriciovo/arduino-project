@@ -119,7 +119,7 @@ public class Player : MonoBehaviour
         if (life <= 0)
         {
             Destroy(gameObject);
-            SceneManager.LoadScene("TitleScene");
+            SceneManager.LoadScene("Title");
 
         }
     }
