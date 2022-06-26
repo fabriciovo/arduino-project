@@ -8,6 +8,8 @@ public class GameUI : MonoBehaviour
     [SerializeField] private TMP_Text life;
     [SerializeField] private TMP_Text xp;
     [SerializeField] private TMP_Text level;
+    [SerializeField] private TMP_Text attackSpeed;
+    [SerializeField] private TMP_Text attackPower;
 
     // Update is called once per frame
     void Update()
@@ -15,6 +17,8 @@ public class GameUI : MonoBehaviour
         life.text = "Life: " + player.GetLife().ToString();
         xp.text = "xp: " + player.GetXP().ToString() + " / " + player.GetMaxXP().ToString();
         level.text = "Level: " + player.GetLevel().ToString();
+        attackPower.text = "Attack Power: " + player.GetAttackPower().ToString();
+        attackSpeed.text = "Attack Speed: " + player.GetAttackSpeed().ToString();
     }
-    
+
 }

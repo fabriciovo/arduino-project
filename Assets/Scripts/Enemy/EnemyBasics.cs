@@ -15,6 +15,7 @@ public class EnemyBasics : MonoBehaviour
     }
     void OnDestroy()
     {
+        if (!player) return;
         player.UpdateXP();
     }
 }

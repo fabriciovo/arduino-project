@@ -14,7 +14,7 @@ public class SpawnController : MonoBehaviour
     private Vector3 terrainRandomPos;
     private GameObject enemy;
     private GameObject playerHelp;
-    private float spawnTime = 2f;
+    private float spawnTime = 1f;
 
     private float delay;
 
@@ -27,8 +27,8 @@ public class SpawnController : MonoBehaviour
     {
         for (int i = 0; i < 600; i++)
         {
-            randomLenght = Random.Range(-600, 600);
-            randomWidth = Random.Range(-600, 600);
+            randomLenght = Random.Range(-447, 447);
+            randomWidth = Random.Range(-447, 447);
             terrainRandomPos = new Vector3(randomWidth, 0.5f, randomLenght);
             int value = Random.Range(0, 5);
             Instantiate(enviroment[value],terrainRandomPos,Quaternion.identity);
@@ -72,8 +72,8 @@ public class SpawnController : MonoBehaviour
         {
             delay = spawnTime;
 
-            randomLenght = Random.Range(-600, 600);
-            randomWidth = Random.Range(-600, 600);
+            randomLenght = Random.Range(-400, 400);
+            randomWidth = Random.Range(-400, 400);
 
             terrainRandomPos = new Vector3(randomWidth, 0.4f, randomLenght);
             Instantiate(enemy, terrainRandomPos, Quaternion.identity);
@@ -86,8 +86,8 @@ public class SpawnController : MonoBehaviour
         {
             delay = spawnTime;
 
-            randomLenght = Random.Range(-600, 600);
-            randomWidth = Random.Range(-600, 600);
+            randomLenght = Random.Range(-400, 400);
+            randomWidth = Random.Range(-400, 400);
 
             terrainRandomPos = new Vector3(randomWidth, 0.5f, randomLenght);
             Instantiate(playerHelp, terrainRandomPos, Quaternion.identity);

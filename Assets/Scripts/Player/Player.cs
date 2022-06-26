@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -12,10 +13,8 @@ public class Player : MonoBehaviour
     public float groundRayLenght;
     public Transform groundRayPoint;
 
-    private bool canJump;
     private float vSpeed;
     private float hSpeed;
-    private float jump;
     private bool isArduino = false;
     private float cd = 0;
     //Power Ups
@@ -23,7 +22,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject shield;
     [SerializeField] private GameObject bomb;
     [SerializeField] private GameObject effect;
-    [SerializeField] private GameObject powerUpPanel;
+    private GameObject powerUpPanel;
 
     //Stats
     private float speed = 20f;
@@ -38,6 +37,8 @@ public class Player : MonoBehaviour
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
+        powerUpPanel = GameObject.Find("Panel");
+        Debug.Log(powerUpPanel);
     }
 
     void Update()
@@ -98,29 +99,28 @@ public class Player : MonoBehaviour
         {
 
             rigidbody.drag = 4f;
-            if (Mathf.Abs(vSpeed) > 0 || Mathf.Abs(hSpeed) > 0 || jump > 0)
+            if (Mathf.Abs(vSpeed) > 0 || Mathf.Abs(hSpeed) > 0)
             {
-                rigidbody.AddForce(new Vector3(vSpeed, jump, hSpeed * -1) * 0.5f);
+                rigidbody.AddForce(new Vector3(vSpeed, 0.0f, hSpeed * -1) * 0.5f);
             }
 
         }
         else
         {
             rigidbody.drag = 2f;
-            if (Mathf.Abs(vSpeed) > 0 || Mathf.Abs(hSpeed) > 0 || jump > 0)
+            if (Mathf.Abs(vSpeed) > 0 || Mathf.Abs(hSpeed) > 0)
             {
                 rigidbody.AddForce(new Vector3(vSpeed, -gravityForce, hSpeed * -1) * 0.5f);
             }
         }
 
-        if (!canJump)
-        {
-            jump = 0;
-        }
+
 
         if (life <= 0)
         {
             Destroy(gameObject);
+            SceneManager.LoadScene("TitleScene");
+
         }
     }
 
@@ -145,10 +145,14 @@ public class Player : MonoBehaviour
         {
             hSpeed = 1 * speed * 1000f;
         }
-        if (msg == "Button")
+        if (msg == "Button1")
         {
-            canJump = true;
-            jump = 10000f;
+            powerUpPanel.GetComponent<PowerUpPanel>().Buy("Button1");
+
+        }
+        if (msg == "Button2")
+        {
+            powerUpPanel.GetComponent<PowerUpPanel>().Buy("Button2");
         }
     }
 
@@ -172,11 +176,9 @@ public class Player : MonoBehaviour
         {
             hSpeed = Input.GetAxis("Horizontal") * speed * 1000f;
         }
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetButtonDown("Jump"))
         {
-            Debug.Log("JUMP");
             UpdateXP();
-            jump = 10000f;
         }
     }
 
@@ -223,6 +225,16 @@ public class Player : MonoBehaviour
         return xpMax;
     }
 
+    public float GetAttackSpeed()
+    {
+        return attackSpeed;
+    }
+
+    public float GetAttackPower()
+    {
+        return attackPower;
+    }
+
     public void UpdateXP()
     {
         xp += xpValue;
@@ -235,19 +247,58 @@ public class Player : MonoBehaviour
         };
     }
 
-    public void PowerUp(){
+    public void PowerUp()
+    {
         powerUpPanel.SetActive(true);
         powerUpPanel.GetComponent<PowerUpPanel>().RandomPowerUp();
     }
 
-    public void SetAttackSpeed(float value){
+    public void SetAttackSpeed(float value)
+    {
         Debug.Log("value " + value.ToString());
         float calc = attackSpeed - value;
-        if(calc >= .5f){
-             attackSpeed = attackSpeed - value;
+        if (calc >= .5f)
+        {
+            attackSpeed = attackSpeed - value;
         }
-       
+
         Debug.Log("attackSpeed " + attackSpeed.ToString());
-    }    
+    }
+
+    public void SetLife(float value)
+    {
+        life += value;
+    }
+    public void SetAttackPower(float value)
+    {
+        attackPower += value;
+    }
+
+    public bool CanUpgradeShoot()
+    {
+        for (int i = 0; i < shoot.Length; i++)
+        {
+            if (shoot[i] == null) return true;
+
+        }
+
+        return false;
+    }
+
+    public void SetXpValue()
+    {
+        xpValue++;
+    }
+    public void UpgradeShoot()
+    {
+        for (int i = 0; i < shoot.Length; i++)
+        {
+            if (shoot[i] == null)
+            {
+                shoot[i] = shoot[0];
+                return;
+            }
+        }
+    }
 
 }
