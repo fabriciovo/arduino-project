@@ -7,7 +7,8 @@ TagManager:
   - Ring
   - Enemy
   - ground
-  - spin
+  - PlayerStuff
+  - PlayerShoot
   layers:
   - Default
   - TransparentFX
