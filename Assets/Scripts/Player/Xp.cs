@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ring : MonoBehaviour
+public class Xp : MonoBehaviour
 {
     private float rotation = 3f;
 

@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject shield;
     [SerializeField] private GameObject bomb;
     [SerializeField] private GameObject effect;
-
+    [SerializeField] private GameObject powerUpPanel;
 
     //Stats
     private float speed = 20f;
@@ -175,6 +175,7 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
         {
             Debug.Log("JUMP");
+            UpdateXP();
             jump = 10000f;
         }
     }
@@ -230,8 +231,23 @@ public class Player : MonoBehaviour
             level++;
             xp = 0;
             xpMax = xpMax * 2;
+            PowerUp();
         };
     }
 
+    public void PowerUp(){
+        powerUpPanel.SetActive(true);
+        powerUpPanel.GetComponent<PowerUpPanel>().RandomPowerUp();
+    }
+
+    public void SetAttackSpeed(float value){
+        Debug.Log("value " + value.ToString());
+        float calc = attackSpeed - value;
+        if(calc >= .5f){
+             attackSpeed = attackSpeed - value;
+        }
+       
+        Debug.Log("attackSpeed " + attackSpeed.ToString());
+    }    
 
 }

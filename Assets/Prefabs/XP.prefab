@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5363079182883100033}
-  - component: {fileID: 5363079182883100046}
+  - component: {fileID: -1936937465393755067}
   - component: {fileID: 5363079182883100047}
   m_Layer: 0
   m_Name: XP
@@ -34,7 +34,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5363079182883100046
+--- !u!114 &-1936937465393755067
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

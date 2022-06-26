@@ -9,6 +9,8 @@ TagManager:
   - ground
   - PlayerStuff
   - PlayerShoot
+  - Enviroment
+  - Xp
   layers:
   - Default
   - TransparentFX

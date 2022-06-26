@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 9029400919289237453}
   - component: {fileID: 9029400919289237451}
   - component: {fileID: 9029400919289237452}
+  - component: {fileID: -8707450534234372956}
   - component: {fileID: 9029400919289237449}
   m_Layer: 0
   m_Name: EnemyProjectile
@@ -60,6 +61,20 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.14332268
   m_Center: {x: 0.0023364723, y: 0, z: 0}
+--- !u!114 &-8707450534234372956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9029400919289237454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdf6dfbb8c6028444a29408bbdce1425, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effect: {fileID: 3216663036563329428, guid: b687ead7ccbc3ae46bbcc3bfa686736c, type: 3}
+  tag: Enviroment
 --- !u!54 &9029400919289237449
 Rigidbody:
   m_ObjectHideFlags: 0
