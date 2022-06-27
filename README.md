@@ -6,7 +6,7 @@ Projeto Arduino In Development
 * Ardity
 * Arduino
 
-## App
+## Build
 * [Download](https://1drv.ms/u/s!AtXs3E6q6Sq7xeA-8kZfM9SZkbQnsQ?e=DXhvSl)
 
 # Documentos:
