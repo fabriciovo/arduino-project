@@ -13,7 +13,7 @@ Projeto Arduino In Development
 
 -   [Concept Doc](/Doc/Concept%20Doc.md)
 
--   [Design Doc]()
+-   [Design Doc](/Doc/Design%20Doc.md)
 
 -   [Arduino](/Doc/Arduino.md)
 

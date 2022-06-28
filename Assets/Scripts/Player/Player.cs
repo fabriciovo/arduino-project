@@ -128,22 +128,22 @@ public class Player : MonoBehaviour
     {
         if (msg == "L")
         {
-            vSpeed = 1 * speed * 1000f;
+            vSpeed = 1 * speed * 100f;
 
         }
-        if (msg == "R")
+        else if (msg == "R")
         {
-            vSpeed = -1 * speed * 1000f;
+            vSpeed = -1 * speed * 100f;
 
         }
-        if (msg == "D")
+        else if (msg == "D")
         {
-            hSpeed = -1 * speed * 1000f;
+            hSpeed = -1 * speed * 100f;
 
         }
-        if (msg == "U")
+        else if (msg == "U")
         {
-            hSpeed = 1 * speed * 1000f;
+            hSpeed = 1 * speed * 100f;
         }
         if (msg == "Button1")
         {
